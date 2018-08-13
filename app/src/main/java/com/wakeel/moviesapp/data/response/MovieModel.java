@@ -1,10 +1,13 @@
 package com.wakeel.moviesapp.data.response;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 
-public class MovieModel {
+public class MovieModel implements Parcelable{
     @SerializedName("id")
     @Expose
     private Integer id;
@@ -23,6 +26,35 @@ public class MovieModel {
     @SerializedName("release_date")
     @Expose
     private String release_date;
+
+    protected MovieModel(Parcel in) {
+        if (in.readByte() == 0) {
+            id = null;
+        } else {
+            id = in.readInt();
+        }
+        if (in.readByte() == 0) {
+            voteAverage = null;
+        } else {
+            voteAverage = in.readDouble();
+        }
+        title = in.readString();
+        poster_path = in.readString();
+        overview = in.readString();
+        release_date = in.readString();
+    }
+
+    public static final Creator<MovieModel> CREATOR = new Creator<MovieModel>() {
+        @Override
+        public MovieModel createFromParcel(Parcel in) {
+            return new MovieModel(in);
+        }
+
+        @Override
+        public MovieModel[] newArray(int size) {
+            return new MovieModel[size];
+        }
+    };
 
     public Integer getId() {
         return id;
@@ -72,4 +104,28 @@ public class MovieModel {
         this.release_date = release_date;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        if (id == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(id);
+        }
+        if (voteAverage == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeDouble(voteAverage);
+        }
+        parcel.writeString(title);
+        parcel.writeString(poster_path);
+        parcel.writeString(overview);
+        parcel.writeString(release_date);
+    }
 }

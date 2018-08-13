@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,9 +22,7 @@ import com.bumptech.glide.request.transition.Transition;
 import com.wakeel.moviesapp.R;
 import com.wakeel.moviesapp.data.URLs;
 import com.wakeel.moviesapp.data.response.MovieModel;
-import com.wakeel.moviesapp.data.response.ResponseModel;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -37,13 +36,16 @@ import io.reactivex.subjects.Subject;
 
 public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.ViewHolder> {
     private List<MovieModel> movies;
-    private Subject<MovieModel> movieClickPoster;
     private Context context;
+    MovieListContract.View moviesListView;
 
     @Inject
     MovieListAdapter() {
         movies = Collections.emptyList();
-        movieClickPoster = PublishSubject.create();
+    }
+
+    public void setView(MovieListContract.View moviesListView){
+        this.moviesListView = moviesListView;
     }
 
     public void setMovies(List<MovieModel> movies) {
@@ -61,6 +63,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
+        holder.movieContainer.setOnClickListener(holder);
         holder.movie = movies.get(position);
         holder.name.setText(holder.movie.getTitle());
 
@@ -87,33 +90,31 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
         return movies.size();
     }
 
-    Observable<MovieModel> getMovieClick() {
-        return movieClickPoster;
-    }
-
     private void setBackgroundColor(Palette palette, ViewHolder holder) {
         holder.titleBackground.setBackgroundColor(palette.getVibrantColor(context
                 .getResources().getColor(R.color.colorPrimary)));
     }
 
-
-    public void addAll(Collection<MovieModel> collection) {
-        movies.addAll(collection);
-    }
-
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         @BindView(R.id.movie_poster)
         ImageView poster;
         @BindView(R.id.title_background)
         View titleBackground;
         @BindView(R.id.movie_name)
         TextView name;
+        @BindView((R.id.movie_container))
+        FrameLayout movieContainer;
 
         public MovieModel movie;
 
         public ViewHolder(View root) {
             super(root);
             ButterKnife.bind(this, root);
+        }
+
+        @Override
+        public void onClick(View view) {
+            moviesListView.movieClicked(movie);
         }
     }
 }

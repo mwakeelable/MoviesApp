@@ -1,5 +1,6 @@
 package com.wakeel.moviesapp.presentation.movie_list;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
@@ -13,6 +14,7 @@ import com.wakeel.moviesapp.data.response.MovieModel;
 import com.wakeel.moviesapp.data.response.ResponseModel;
 import com.wakeel.moviesapp.di.component.FragmentComponent;
 import com.wakeel.moviesapp.presentation.base.BaseFragment;
+import com.wakeel.moviesapp.presentation.movie_details.MovieDetailsActivity;
 
 import javax.inject.Inject;
 
@@ -35,6 +37,7 @@ public class MovieListFragment extends BaseFragment implements MovieListContract
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        adapter.setView(this);
         moviesListRecyclerView.setHasFixedSize(true);
         int columns = 2;
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), columns);
@@ -84,15 +87,11 @@ public class MovieListFragment extends BaseFragment implements MovieListContract
 
     @Override
     public void movieClicked(MovieModel movieModel) {
-        Disposable disposable =
-                adapter.getMovieClick()
-                        .subscribe(movieModel1 -> {
-                            Toast.makeText(getContext(), movieModel.getTitle(), Toast.LENGTH_SHORT).show();
-                            // to start new activity
-                            // startActivity(DetailActivity.getStartIntent(this, post)),
-                        }, throwable -> {
-                            Toast.makeText(getContext(), throwable.toString(), Toast.LENGTH_SHORT).show();
-                        });
-        movieListPresenter.addDisposable(disposable);
+        Toast.makeText(getContext(), movieModel.getTitle(), Toast.LENGTH_SHORT).show();
+        Intent movieDetailsIntent = new Intent(getContext(), MovieDetailsActivity.class);
+        Bundle extras = new Bundle();
+        extras.putParcelable("movie", movieModel);
+        movieDetailsIntent.putExtras(extras);
+        startActivity(movieDetailsIntent);
     }
 }

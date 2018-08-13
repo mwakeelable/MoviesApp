@@ -2,6 +2,7 @@ package com.wakeel.moviesapp.di.component;
 
 import com.wakeel.moviesapp.di.module.FragmentModule;
 import com.wakeel.moviesapp.di.scope.PerFragment;
+import com.wakeel.moviesapp.presentation.movie_details.MovieDetailsFragment;
 import com.wakeel.moviesapp.presentation.movie_list.MovieListFragment;
 
 import dagger.Subcomponent;
@@ -11,4 +12,6 @@ import dagger.Subcomponent;
 public interface FragmentComponent {
 
     void inject(MovieListFragment movieListFragment);
+
+    void inject(MovieDetailsFragment movieDetailsFragment);
 }
