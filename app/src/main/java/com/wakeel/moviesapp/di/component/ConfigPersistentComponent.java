@@ -1,6 +1,7 @@
 package com.wakeel.moviesapp.di.component;
 
 import com.wakeel.moviesapp.di.module.ActivityModule;
+import com.wakeel.moviesapp.di.module.FragmentModule;
 import com.wakeel.moviesapp.di.scope.ConfigPersistent;
 
 import dagger.Component;
@@ -10,5 +11,7 @@ import dagger.Component;
 public interface ConfigPersistentComponent {
 
     ActivityComponent activityComponent(ActivityModule activityModule);
+
+    FragmentComponent fragmentComponent(FragmentModule fragmentModule);
 
 }
