@@ -33,6 +33,15 @@ public class MovieDetailsFragment extends BaseFragment implements MovieDetailsCo
     public MovieDetailsFragment() {
     }
 
+    public static MovieDetailsFragment getInstance(@NonNull MovieModel movie)
+    {
+        Bundle args = new Bundle();
+        args.putParcelable("movie", movie);
+        MovieDetailsFragment movieDetailsFragment = new MovieDetailsFragment();
+        movieDetailsFragment.setArguments(args);
+        return movieDetailsFragment;
+    }
+
     @Override
     protected int getLayout() {
         return R.layout.movie_details_fragment;

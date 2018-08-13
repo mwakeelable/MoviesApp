@@ -87,11 +87,14 @@ public class MovieListFragment extends BaseFragment implements MovieListContract
 
     @Override
     public void movieClicked(MovieModel movieModel) {
-        Toast.makeText(getContext(), movieModel.getTitle(), Toast.LENGTH_SHORT).show();
-        Intent movieDetailsIntent = new Intent(getContext(), MovieDetailsActivity.class);
-        Bundle extras = new Bundle();
-        extras.putParcelable("movie", movieModel);
-        movieDetailsIntent.putExtras(extras);
-        startActivity(movieDetailsIntent);
+        if (((MovieListActivity) getContext()).twoPaneMode) {
+            ((MovieListActivity) getContext()).loadMovieFragment(movieModel);
+        } else {
+            Intent movieDetailsIntent = new Intent(getContext(), MovieDetailsActivity.class);
+            Bundle extras = new Bundle();
+            extras.putParcelable("movie", movieModel);
+            movieDetailsIntent.putExtras(extras);
+            startActivity(movieDetailsIntent);
+        }
     }
 }

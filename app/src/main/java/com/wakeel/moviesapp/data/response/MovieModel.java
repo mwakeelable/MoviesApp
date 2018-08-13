@@ -13,7 +13,7 @@ public class MovieModel implements Parcelable{
     private Integer id;
     @SerializedName("vote_average")
     @Expose
-    private Double voteAverage;
+    private Double vote_average;
     @SerializedName("title")
     @Expose
     private String title;
@@ -34,9 +34,9 @@ public class MovieModel implements Parcelable{
             id = in.readInt();
         }
         if (in.readByte() == 0) {
-            voteAverage = null;
+            vote_average = null;
         } else {
-            voteAverage = in.readDouble();
+            vote_average = in.readDouble();
         }
         title = in.readString();
         poster_path = in.readString();
@@ -65,11 +65,11 @@ public class MovieModel implements Parcelable{
     }
 
     public Double getVoteAverage() {
-        return voteAverage;
+        return vote_average;
     }
 
-    public void setVoteAverage(Double voteAverage) {
-        this.voteAverage = voteAverage;
+    public void setVoteAverage(Double vote_average) {
+        this.vote_average = vote_average;
     }
 
     public String getTitle() {
@@ -117,11 +117,11 @@ public class MovieModel implements Parcelable{
             parcel.writeByte((byte) 1);
             parcel.writeInt(id);
         }
-        if (voteAverage == null) {
+        if (vote_average == null) {
             parcel.writeByte((byte) 0);
         } else {
             parcel.writeByte((byte) 1);
-            parcel.writeDouble(voteAverage);
+            parcel.writeDouble(vote_average);
         }
         parcel.writeString(title);
         parcel.writeString(poster_path);
