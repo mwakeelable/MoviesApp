@@ -8,7 +8,7 @@
     </style>
 
     <style name="TitledDialog" parent="@style/Theme.AppCompat.Light.Dialog">
-        <item name="android:windowNoTitle">false</item>
+        <item name="android:windowNoTitle">true</item>
     </style>
 
     <style name="AppTheme.Toolbar" parent="Theme.AppCompat.Light">
