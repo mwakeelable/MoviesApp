@@ -43,4 +43,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected abstract void inject(ActivityComponent activityComponent);
 
     protected abstract void attachView();
+
+    protected abstract void detachPresenter();
 }

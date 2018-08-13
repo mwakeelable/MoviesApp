@@ -16,13 +16,13 @@ public class MovieModel {
     private String title;
     @SerializedName("poster_path")
     @Expose
-    private String posterPath;
+    private String poster_path;
     @SerializedName("overview")
     @Expose
     private String overview;
     @SerializedName("release_date")
     @Expose
-    private String releaseDate;
+    private String release_date;
 
     public Integer getId() {
         return id;
@@ -49,11 +49,11 @@ public class MovieModel {
     }
 
     public String getPosterPath() {
-        return posterPath;
+        return poster_path;
     }
 
-    public void setPosterPath(String posterPath) {
-        this.posterPath = posterPath;
+    public void setPosterPath(String poster_path) {
+        this.poster_path = poster_path;
     }
 
     public String getOverview() {
@@ -65,11 +65,11 @@ public class MovieModel {
     }
 
     public String getReleaseDate() {
-        return releaseDate;
+        return release_date;
     }
 
-    public void setReleaseDate(String releaseDate) {
-        this.releaseDate = releaseDate;
+    public void setReleaseDate(String release_date) {
+        this.release_date = release_date;
     }
 
 }
