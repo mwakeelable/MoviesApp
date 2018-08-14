@@ -7,7 +7,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 
-public class MovieModel implements Parcelable{
+public class MovieModel implements Parcelable {
     @SerializedName("id")
     @Expose
     private Integer id;
@@ -26,6 +26,9 @@ public class MovieModel implements Parcelable{
     @SerializedName("release_date")
     @Expose
     private String release_date;
+    @SerializedName("backdrop_path")
+    @Expose
+    private String backdrop_path;
 
     protected MovieModel(Parcel in) {
         if (in.readByte() == 0) {
@@ -42,6 +45,7 @@ public class MovieModel implements Parcelable{
         poster_path = in.readString();
         overview = in.readString();
         release_date = in.readString();
+        backdrop_path = in.readString();
     }
 
     public static final Creator<MovieModel> CREATOR = new Creator<MovieModel>() {
@@ -104,6 +108,14 @@ public class MovieModel implements Parcelable{
         this.release_date = release_date;
     }
 
+    public String getBackdrop_path() {
+        return backdrop_path;
+    }
+
+    public void setBackdrop_path(String backdrop_path) {
+        this.backdrop_path = backdrop_path;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -127,5 +139,6 @@ public class MovieModel implements Parcelable{
         parcel.writeString(poster_path);
         parcel.writeString(overview);
         parcel.writeString(release_date);
+        parcel.writeString(backdrop_path);
     }
 }

@@ -33,8 +33,7 @@ public class MovieDetailsFragment extends BaseFragment implements MovieDetailsCo
     public MovieDetailsFragment() {
     }
 
-    public static MovieDetailsFragment getInstance(@NonNull MovieModel movie)
-    {
+    public static MovieDetailsFragment getInstance(@NonNull MovieModel movie) {
         Bundle args = new Bundle();
         args.putParcelable("movie", movie);
         MovieDetailsFragment movieDetailsFragment = new MovieDetailsFragment();
@@ -64,8 +63,6 @@ public class MovieDetailsFragment extends BaseFragment implements MovieDetailsCo
 
     @BindView(R.id.movie_poster)
     ImageView poster;
-    @BindView(R.id.collapsing_toolbar)
-    CollapsingToolbarLayout collapsingToolbar;
     @BindView(R.id.movie_name)
     TextView title;
     @BindView(R.id.movie_year)
@@ -74,9 +71,8 @@ public class MovieDetailsFragment extends BaseFragment implements MovieDetailsCo
     TextView rating;
     @BindView(R.id.movie_description)
     TextView overview;
-    @BindView(R.id.toolbar)
-    @Nullable
-    Toolbar toolbar;
+    @BindView(R.id.backdrop_image)
+    ImageView backDropImage;
 
     private Unbinder unbinder;
 
@@ -86,7 +82,7 @@ public class MovieDetailsFragment extends BaseFragment implements MovieDetailsCo
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         unbinder = ButterKnife.bind(this, view);
-        setToolbar();
+//        setToolbar();
         if (getArguments() != null) {
             MovieModel movieModel = (MovieModel) getArguments().get("movie");
             this.movieModel = movieModel;
@@ -97,28 +93,29 @@ public class MovieDetailsFragment extends BaseFragment implements MovieDetailsCo
     @Override
     public void showMovieDetails(MovieModel movie) {
         Glide.with(getContext()).load(URLs.getImagePath(movie.getPosterPath())).into(poster);
+        Glide.with(getContext()).load(URLs.getImagePath(movie.getBackdrop_path())).into(backDropImage);
         title.setText(movie.getTitle());
         releaseDate.setText(String.format(getString(R.string.release_date), movie.getReleaseDate()));
         rating.setText(String.format(getString(R.string.rating), String.valueOf(movie.getVoteAverage())));
         overview.setText(movie.getOverview());
     }
 
-    private void setToolbar() {
-        collapsingToolbar.setContentScrimColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
-        collapsingToolbar.setTitle("Movie Details");
-        collapsingToolbar.setCollapsedTitleTextAppearance(R.style.CollapsedToolbar);
-        collapsingToolbar.setExpandedTitleTextAppearance(R.style.ExpandedToolbar);
-        collapsingToolbar.setTitleEnabled(true);
-
-        if (toolbar != null) {
-            ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-
-            ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-            if (actionBar != null) {
-                actionBar.setDisplayHomeAsUpEnabled(true);
-            }
-        } else {
-            // Don't inflate. Tablet is in landscape mode.
-        }
-    }
+//    private void setToolbar() {
+//        collapsingToolbar.setContentScrimColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
+//        collapsingToolbar.setTitle("Movie Details");
+//        collapsingToolbar.setCollapsedTitleTextAppearance(R.style.CollapsedToolbar);
+//        collapsingToolbar.setExpandedTitleTextAppearance(R.style.ExpandedToolbar);
+//        collapsingToolbar.setTitleEnabled(true);
+//
+//        if (toolbar != null) {
+//            ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+//
+//            ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+//            if (actionBar != null) {
+//                actionBar.setDisplayHomeAsUpEnabled(true);
+//            }
+//        } else {
+//            // Don't inflate. Tablet is in landscape mode.
+//        }
+//    }
 }

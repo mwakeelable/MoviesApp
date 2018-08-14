@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 
@@ -44,7 +45,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
         movies = Collections.emptyList();
     }
 
-    public void setView(MovieListContract.View moviesListView){
+    public void setView(MovieListContract.View moviesListView) {
         this.moviesListView = moviesListView;
     }
 
@@ -80,6 +81,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
                     @Override
                     public void onResourceReady(Bitmap bitmap, @Nullable Transition<? super Bitmap> transition) {
                         super.onResourceReady(bitmap, transition);
+                        holder.movieItemProgress.setVisibility(View.GONE);
                         Palette.from(bitmap).generate(palette -> setBackgroundColor(palette, holder));
                     }
                 });
@@ -95,9 +97,11 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
                 .getResources().getColor(R.color.colorPrimary)));
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         @BindView(R.id.movie_poster)
         ImageView poster;
+        @BindView(R.id.movieItemProgress)
+        ProgressBar movieItemProgress;
         @BindView(R.id.title_background)
         View titleBackground;
         @BindView(R.id.movie_name)
